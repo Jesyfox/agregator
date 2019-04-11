@@ -9,13 +9,14 @@ class Parser:
         'title': '_get_title',
         'tags': '_get_tags',
         'author': '_get_author',
-        'post_time': '_get_post_time',
         'body_content': '_get_body_content'
     }
 
-    def __init__(self, page_url):
+    def __init__(self, site_url):
 
-        page = requests.get(page_url)
+        self.site_url = site_url
+
+        page = requests.get(self.site_url)
         self.page_tree = et.HTML(page.content)
 
     def _get_post_list(self, page_tree):
@@ -55,9 +56,6 @@ class Parser:
     def _get_author(self, tree):
         raise NotImplementedError
 
-    def _get_post_time(self, tree):
-        raise NotImplementedError
-
     def _get_body_content(self, tree):
         raise NotImplementedError
 
@@ -65,11 +63,11 @@ class Parser:
         pass  # !!!!!!!!!
 
     def start_parse(self):
-        data = {}
+        data = {'site': self.site_url}
         for page_tree in self._get_page_tree_list():
             for post_tree in self._get_post_list(page_tree):
                 for field_key in self.field_mappings.keys():
                     field = getattr(self, self.field_mappings[field_key])
                     data.update({field_key: field(post_tree)})
                 self.update_db(data)
-                data = {}
+                data = {'site': self.site_url}
