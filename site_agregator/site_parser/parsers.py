@@ -1,73 +1,107 @@
 import requests
-
 import lxml.etree as et
+
+try:
+    import utils
+except ModuleNotFoundError:
+    from . import utils
 
 
 class Parser:
     field_mappings = {
-        'url': '_get_url',
         'title': '_get_title',
-        'tags': '_get_tags',
+        'tags': '_get_tags_list',
         'author': '_get_author',
         'body_content': '_get_body_content'
     }
 
-    def __init__(self, site_url):
+    site_url = ''
 
-        self.site_url = site_url
+    def __init__(self):
+        if not self.site_url:
+            raise NotImplementedError('You must overwrite site_url var')
 
         page = requests.get(self.site_url)
         self.page_tree = et.HTML(page.content)
 
     def _get_post_list(self, page_tree):
-        post_url_list = []
-        if not post_url_list:
-            raise NotImplementedError
+        raise NotImplementedError
 
-        post_tree_list = []
-
-        for post_url in post_url_list:
-            r_post = requests.get(post_url)
-            post_tree = et.HTML(r_post.content, base_url=post_url)
-            post_tree_list.append(post_tree)
-
-        for post_tree in post_tree_list:
-            yield post_tree
-
-    def _get_page_tree_list(self):
+    def _get_page_list(self):
         """
-        :return: [self.page_tree, '*page_url*/ru/page2/', '*page_url*/ru/page3/', '*page_url*/ru/page4/']
+        :return: [self.page_tree,(!!!) '*page_url*/page2/', '*page_url*/page3/', '*page_url*/page4/']
         """
-        page_tree_list = [self.page_tree, ]
-
-        # xPath add
-
-        return page_tree_list
-
-    def _get_url(self, tree):
-        return tree.base
-
-    def _get_title(self, tree):
         raise NotImplementedError
 
-    def _get_tags(self, tree):
+    def _get_tags_list(self, post_tree):
         raise NotImplementedError
 
-    def _get_author(self, tree):
+    def _get_title(self, post_tree):
         raise NotImplementedError
 
-    def _get_body_content(self, tree):
+    def _get_author(self, post_tree):
         raise NotImplementedError
 
-    def update_db(self, data):
-        pass  # !!!!!!!!!
+    def _get_body_content(self, post_tree):
+        raise NotImplementedError
+
+    @staticmethod
+    def tree_iterator(url_list):
+        for url in url_list:
+            r_url = requests.get(url)
+            tree = et.HTML(r_url.content, base_url=url)
+            yield tree
+
+    def parse_data_from_post(self, post_tree):
+        data = {'site_url': self.site_url}
+        for field_key in self.field_mappings.keys():
+            field = getattr(self, self.field_mappings[field_key])
+            data.update({field_key: field(post_tree)})
+        data.update({'post_url': post_tree.base})
+        return data
 
     def start_parse(self):
-        data = {'site': self.site_url}
-        for page_tree in self._get_page_tree_list():
-            for post_tree in self._get_post_list(page_tree):
-                for field_key in self.field_mappings.keys():
-                    field = getattr(self, self.field_mappings[field_key])
-                    data.update({field_key: field(post_tree)})
-                self.update_db(data)
-                data = {'site': self.site_url}
+        for page_tree in self.tree_iterator(self._get_page_list()):
+            for post_tree in self.tree_iterator(self._get_post_list(page_tree)):
+                data = self.parse_data_from_post(post_tree)
+                utils.add_post_to_db(data)
+
+
+class Habr(Parser):
+    site_url = 'https://habr.com'
+
+    def _get_post_list(self, page_tree):
+        xpath = '//a[@class="post__title_link"]/@href'
+        res = page_tree.xpath(xpath)
+        return res
+
+    def _get_page_list(self):
+        xpath = '//a[@class="toggle-menu__item-link toggle-menu__item-link_pagination"]/@href'
+        page_list = [self.site_url, ] + [self.site_url + page_url for page_url in self.page_tree.xpath(xpath)]
+        return page_list
+
+    def _get_title(self, post_tree):
+        xpath = '//span[@class="post__title-text"]/text()'
+        res = post_tree.xpath(xpath)
+        return res
+
+    def _get_tags_list(self, post_tree):
+        xpath = '//a[@class="inline-list__item-link post__tag  "]/text()'
+        res = post_tree.xpath(xpath)
+        return res
+
+    def _get_author(self, post_tree):
+        xpath = '//span[@class="user-info__nickname user-info__nickname_small"]/text()'
+        res = post_tree.xpath(xpath)
+        return res
+
+    def _get_body_content(self, post_tree):
+        xpath = '//div[@class="post__body post__body_full"]'
+        element = post_tree.xpath(xpath)
+        content = et.tostring(element[0], encoding='unicode')
+        return content
+
+
+if __name__ == '__main__':
+    test = Habr()
+    test.start_parse()

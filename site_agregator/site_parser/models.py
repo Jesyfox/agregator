@@ -15,9 +15,8 @@ class Author(models.Model):
 
 class Post(models.Model):
     site_url = models.ForeignKey(SiteUrl, on_delete=models.CASCADE)
-    post_url = models.URLField()
+    post_url = models.URLField(unique=True)
     title = models.CharField(max_length=300)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
-    content = models.TextField()
-
+    body_content = models.TextField()
