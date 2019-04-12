@@ -5,6 +5,13 @@
     <title>Post List</title>
 </head>
 <body>
-This is main page
+<div>
+    Post list:
+    {% for post in posts %}
+        <p><b>{{ post.title }}</b></p>
+        <p><a href="{{ post.post_url }}">{{ post.post_url }}</a></p>
+    Tags: {% for tag in post.tags.all %}<b>| </b>{{ tag }} {% endfor %}
+    {% endfor %}
+</div>
 </body>
 </html>
