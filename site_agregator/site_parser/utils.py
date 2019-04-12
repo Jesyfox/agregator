@@ -15,13 +15,6 @@ def get_tag_object(tag):
 
 
 def add_post_to_db(data):
-    print('data:')
-    for k, i in data.items():
-        if k != 'body_content':
-            print(f'\t{k} --> {i}')
-        else:
-            print(f'\t{k} --> {len(i)}')
-
     new_post = Post(site_url=get_site_url_object(data['site_url']),
                     post_url=data['post_url'],
                     title=data['title'],
@@ -34,3 +27,10 @@ def add_post_to_db(data):
         pass
     else:
         [new_post.tags.add(get_tag_object(tag)) for tag in data['tags']]
+
+        print('data:')
+        for k, i in data.items():
+            if k != 'body_content':
+                print(f'\t{k} --> {i}')
+            else:
+                print(f'\t{k} --> {len(i)}')

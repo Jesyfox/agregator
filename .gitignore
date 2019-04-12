@@ -1,8 +1,6 @@
 db.sqlite3
 .idea/
-pyFormers/__pycache__
-pyFormers/pyFormers/__pycache__/
-pyFormers/tests/migrations/
+site_agregator/site_agregator/__pycache__/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
