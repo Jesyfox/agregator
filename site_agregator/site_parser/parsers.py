@@ -25,15 +25,19 @@ class Parser:
 
         self.logger = logging.getLogger(self.site_url)
 
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
 
         stdout_format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         channel = logging.StreamHandler(sys.stdout)
         channel.setFormatter(stdout_format)
         self.logger.addHandler(channel)
 
-        page = requests.get(self.site_url)
-        self.page_tree = et.HTML(page.content)
+        try:
+            page = requests.get(self.site_url, timeout=20)
+        except requests.exceptions.Timeout:
+            self.logger.error(f'main url {self.site_url}, timed out!')
+        else:
+            self.page_tree = et.HTML(page.content)
 
     def _get_post_list(self, page_tree):
         raise NotImplementedError
@@ -59,10 +63,14 @@ class Parser:
     def tree_iterator(self, url_list):
         for url in url_list:
             self.logger.debug(f'get url {url}')
-            r_url = requests.get(url)
-            tree = et.HTML(r_url.content, base_url=url)
-            self.logger.debug('yielding tree')
-            yield tree
+            try:
+                r_url = requests.get(url, timeout=20)
+            except requests.exceptions.Timeout:
+                self.logger.error(f'url {url}, timed out!')
+            else:
+                tree = et.HTML(r_url.content, base_url=url)
+                self.logger.debug('yielding tree')
+                yield tree
 
     def parse_data_from_post(self, post_tree):
         data = {'site_url': self.site_url}
