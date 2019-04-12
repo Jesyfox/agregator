@@ -6,7 +6,8 @@
 </head>
 <body>
 <div>
-    Post list:
+    <a href="parse/habr/">parse habr</a>
+    <p>Post list:</p>
     {% for post in posts %}
     <p><b><a href="{% url 'post_previewer:post_detail' post.id %}">{{ post.title }}</a></b></p>
         <p><a href="{{ post.post_url }}">{{ post.post_url }}</a></p>
