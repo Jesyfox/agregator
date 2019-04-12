@@ -5,6 +5,9 @@
     <title>Parser Starter</title>
 </head>
 <body>
+<div>
+    {{ models_count }} posts of {{ site }} in db
+</div>
 <form action="" method="post">
     {% csrf_token %}
     <input type="submit" name="parse" value="Parse" />

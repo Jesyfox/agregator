@@ -25,7 +25,7 @@ class Parser:
 
         self.logger = logging.getLogger(self.site_url)
 
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
 
         stdout_format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         channel = logging.StreamHandler(sys.stdout)

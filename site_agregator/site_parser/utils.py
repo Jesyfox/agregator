@@ -1,3 +1,4 @@
+from django.db.utils import IntegrityError
 from .models import Post, Tag, SiteUrl, Author
 
 
@@ -27,5 +28,9 @@ def add_post_to_db(data):
                     author=get_author_object(data['author']),
                     body_content=data['body_content']
                     )
-    new_post.save()
-    [new_post.tags.add(get_tag_object(tag)) for tag in data['tags']]
+    try:
+        new_post.save()
+    except IntegrityError:
+        pass
+    else:
+        [new_post.tags.add(get_tag_object(tag)) for tag in data['tags']]
