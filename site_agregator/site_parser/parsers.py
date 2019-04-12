@@ -25,7 +25,7 @@ class Parser:
 
         self.logger = logging.getLogger(self.site_url)
 
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
 
         stdout_format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         channel = logging.StreamHandler(sys.stdout)
@@ -85,6 +85,9 @@ class Parser:
         return data
 
     def start_parse(self):
+        """
+        TODO: add unique item check
+        """
         self.logger.debug('start parse...')
         for page_tree in self.tree_iterator(self._get_page_list()):
             for post_tree in self.tree_iterator(self._get_post_list(page_tree)):
@@ -108,7 +111,7 @@ class Habr(Parser):
 
     def _get_title(self, post_tree):
         xpath = '//span[@class="post__title-text"]/text()'
-        res = post_tree.xpath(xpath)
+        res = post_tree.xpath(xpath)[0]
         return res
 
     def _get_tags_list(self, post_tree):
@@ -118,7 +121,7 @@ class Habr(Parser):
 
     def _get_author(self, post_tree):
         xpath = '//span[@class="user-info__nickname user-info__nickname_small"]/text()'
-        res = post_tree.xpath(xpath)
+        res = post_tree.xpath(xpath)[0]
         return res
 
     def _get_body_content(self, post_tree):
