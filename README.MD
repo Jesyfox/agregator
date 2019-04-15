@@ -4,7 +4,7 @@ docs:
 
 tags - https://django-tagging.readthedocs.io/en/develop/#tagging-views-taggedobjectlist
 
-writen with Python 3.7
+writen with Python 3.6.7
 
 you will need:
 
