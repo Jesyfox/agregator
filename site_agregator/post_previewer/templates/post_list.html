@@ -2,6 +2,12 @@
 <div>
     <a href="/parse/habr">habr</a>
 </div>
+<div>
+    <form method="GET" action="" id="searchform">
+        <input class="searchfield" id="searchbox" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search..."/>
+        <input type="submit" value="Search" />
+    </form>
+</div>
 <ul>
 {% for post in object_list %}
     <li>
