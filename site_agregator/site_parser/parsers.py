@@ -3,13 +3,11 @@ import sys
 import requests
 import lxml.etree as et
 
-try:
-    import utils
-except ModuleNotFoundError:
-    from . import utils
+from . import utils
 
 
 class Parser:
+    PARSER = {}
     field_mappings = {
         'title': '_get_title',
         'tags': '_get_tags_list',
@@ -86,7 +84,7 @@ class Parser:
 
     def start_parse(self):
         """
-        TODO: add unique item check
+        TODO: use field_mappings to _get post, _get_page
         """
         self.logger.debug('start parse...')
         for page_tree in self.tree_iterator(self._get_page_list()):
@@ -95,7 +93,19 @@ class Parser:
                 utils.add_post_to_db(data)
         self.logger.debug('parse is done!')
 
+    @classmethod
+    def register(cls, name):
+        def dec(parser_cls):
+            cls.PARSER[name] = parser_cls
+            return parser_cls
+        return dec
 
+    @classmethod
+    def get(cls, name, **kwargs):
+        return cls.PARSER[name](**kwargs)
+
+
+@Parser.register('habr')
 class Habr(Parser):
     site_url = 'https://habr.com'
 
@@ -129,8 +139,3 @@ class Habr(Parser):
         element = post_tree.xpath(xpath)
         content = et.tostring(element[0], encoding='unicode')
         return content
-
-
-if __name__ == '__main__':
-    test = Habr()
-    test.start_parse()

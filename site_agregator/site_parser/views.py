@@ -1,14 +1,14 @@
 from django.shortcuts import render
 
-from . import parsers
+from .parsers import Parser
 from .models import Post
+from .tasks import parse
 
 
 def habr_parser_starter(request):
     site = 'https://habr.com'
-    parser_habr = parsers.Habr()
     context = {'models_count': Post.objects.filter(site_url__url=site).count(),
                'site': site}
     if request.method == 'POST':
-        parser_habr.start_parse()
+        parse.delay('habr')
     return render(request, 'parser_starter.html', context=context)

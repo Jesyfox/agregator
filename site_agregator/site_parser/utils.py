@@ -28,9 +28,4 @@ def add_post_to_db(data):
     else:
         [new_post.tags.add(get_tag_object(tag)) for tag in data['tags']]
 
-        print('data:')
-        for k, i in data.items():
-            if k != 'body_content':
-                print(f'\t{k} --> {i}')
-            else:
-                print(f'\t{k} --> {len(i)}')
+        print(f'new_post: {data["title"]}')
