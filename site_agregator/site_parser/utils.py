@@ -1,5 +1,5 @@
 from django.db.utils import IntegrityError
-from .models import Post, Tag, SiteUrl, Author
+from .models import Post, SiteUrl, Author
 
 
 def get_author_object(author):
@@ -8,10 +8,6 @@ def get_author_object(author):
 
 def get_site_url_object(site_url):
     return SiteUrl.objects.get_or_create(url=site_url)[0]
-
-
-def get_tag_object(tag):
-    return Tag.objects.get_or_create(name=tag)[0]
 
 
 def add_post_to_db(data):
@@ -26,6 +22,5 @@ def add_post_to_db(data):
     except IntegrityError:
         pass
     else:
-        [new_post.tags.add(get_tag_object(tag)) for tag in data['tags']]
-
+        new_post.tags = ','.join(data['tags'])
         print(f'new_post: {data["title"]}')

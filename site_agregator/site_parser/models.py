@@ -1,11 +1,6 @@
 from django.db import models
 
-
-class Tag(models.Model):
-    name = models.CharField(max_length=40)
-
-    def __str__(self):
-        return f'{self.name}'
+from tagging.registry import register as tag_register
 
 
 class SiteUrl(models.Model):
@@ -27,8 +22,10 @@ class Post(models.Model):
     post_url = models.URLField(unique=True)
     title = models.CharField(max_length=300)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag)
     body_content = models.TextField()
 
     def __str__(self):
         return f'{self.title}'
+
+
+tag_register(Post)

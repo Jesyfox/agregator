@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'post_previewer',
 
     'django_celery_results',
+    'tagging',
 ]
 
 MIDDLEWARE = [
