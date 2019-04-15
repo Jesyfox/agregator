@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'site_parser',
     'post_previewer',
+
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -86,6 +88,8 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+CELERY_RESULT_BACKEND = 'django-db'
 
 
 # Password validation
