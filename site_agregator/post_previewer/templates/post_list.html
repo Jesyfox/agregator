@@ -1,19 +1,13 @@
-<h1>Posts</h1>
+<h1><a href="/">Posts</a></h1>
 <div>
     <a href="/parse/habr">habr</a>
-</div>
-<div>
-    <form method="GET" action="" id="searchform">
-        <input class="searchfield" id="searchbox" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search..."/>
-        <input type="submit" value="Search" />
-    </form>
 </div>
 <ul>
 {% for post in object_list %}
     <li>
         <p><b><a href="{% url 'post_previewer:post_detail' post.id %}">{{ post.title }}</a></b></p>
         <p><a href="{{ post.post_url }}">{{ post.post_url }}</a></p>
-        Tags: {% for tag in post.tags.all %}<b>| </b>{{ tag }} {% endfor %}
+        Tags: {% for tag in post.tags.all %}<b>| </b> <a href="{% url 'post_previewer:post_tag_detail' tag %}">{{ tag }}</a> {% endfor %}
     </li>
 {% empty %}
     <li>No posts yet.</li>
