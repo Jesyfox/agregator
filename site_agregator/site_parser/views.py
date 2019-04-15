@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-from .parsers import Parser
 from .models import Post
 from .tasks import parse
 

@@ -83,9 +83,6 @@ class Parser:
         return data
 
     def start_parse(self):
-        """
-        TODO: use field_mappings to _get post, _get_page
-        """
         self.logger.debug('start parse...')
         for page_tree in self.tree_iterator(self._get_page_list()):
             for post_tree in self.tree_iterator(self._get_post_list(page_tree)):
