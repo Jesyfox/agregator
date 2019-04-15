@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>agregator</title>
+</head>
+<body>
+<div>
+    <p>Parsers: <a href="/parse/habr">habr</a></p>
+</div>
+<h1><a href="/posts">Posts</a> <a href="/tags">Tags</a></h1>
+
+{% if tag %}<h2>Tag: {{ tag }}</h2>{% endif %}
+
+{% block content %}
+{% endblock %}
+</body>
+</html>

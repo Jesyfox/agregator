@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>post_detail</title>
-</head>
-    <body>
-        <a href="/">back</a>
+{% extends "base_template.html" %}
+{% block content %}
         <p><h1>Title: {{ post.title }}</h1></p>
         <p>Author: {{ post.author }}</p>
         <p>Tags: {% for tag in post.tags.all %}<b>| </b>{{ tag }} {% endfor %}</p>
         <p>Source: <a href="{{ post.post_url }}">{{ post.post_url }}</a></p>
         <p>{{ post.body_content | safe }}</p>
-    </body>
-</html>
+{% endblock %}

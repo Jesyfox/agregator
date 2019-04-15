@@ -1,16 +1,27 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic import View
 from django.core.exceptions import ImproperlyConfigured
 
 from tagging.views import TaggedObjectList
+from tagging.models import Tag
 
 from site_parser.models import Post
 
 
+class Index(View):
+    def get(self, request):
+        return redirect('posts/')
+
+
+class TagList(ListView):
+    queryset = Tag.objects.usage_for_model(Post, counts=True, min_count=2)
+    template_name = 'tag_list.html'
+
+
 class PostTagDetail(TaggedObjectList):
     model = Post
-    paginate_by = 20
+    paginate_by = 15
     template_name = 'post_list.html'
 
     def get_queryset_or_model(self):
@@ -31,7 +42,7 @@ class PostTagDetail(TaggedObjectList):
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 20
+    paginate_by = 15
     template_name = 'post_list.html'
 
     def get_queryset(self):
