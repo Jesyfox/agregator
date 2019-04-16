@@ -16,5 +16,5 @@ router.register(r'tags', api_views.TagViewSet)
 
 urlpatterns += [
     path('api/', include((router.urls, 'site_parser'))),
-    path('api/posts/<int:pk>/body/', api_views.PostBody.as_view()),
+    path('api/posts/<int:pk>/body/', api_views.PostBody.as_view(), name='posts-body'),
 ]

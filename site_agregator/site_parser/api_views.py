@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from tagging.models import Tag, TaggedItem
 
 from .models import SiteUrl, Author, Post
-from .serializers import SiteUrlSerializer, AuthorSerializer, TagSerializer, PostSerializer
+from .serializers import SiteUrlPostSerializer, TagSerializer, PostSerializer
 
 
 class PostBody(generics.GenericAPIView):
