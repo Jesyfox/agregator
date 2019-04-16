@@ -2,6 +2,7 @@ import logging
 import sys
 import requests
 import lxml.etree as et
+import time
 
 from . import utils
 
@@ -23,7 +24,7 @@ class Parser:
 
         self.logger = logging.getLogger(self.site_url)
 
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
 
         stdout_format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         channel = logging.StreamHandler(sys.stdout)
@@ -63,6 +64,7 @@ class Parser:
             self.logger.debug(f'get url {url}')
             try:
                 r_url = requests.get(url, timeout=20)
+                time.sleep(3)
             except requests.exceptions.Timeout:
                 self.logger.error(f'url {url}, timed out!')
             else:
@@ -133,6 +135,41 @@ class Habr(Parser):
 
     def _get_body_content(self, post_tree):
         xpath = '//div[@class="post__body post__body_full"]'
+        element = post_tree.xpath(xpath)
+        content = et.tostring(element[0], encoding='unicode')
+        return content
+
+
+@Parser.register('tproger-python')
+class TProgerPython(Parser):
+    site_url = 'https://tproger.ru/tag/python/'
+
+    def _get_post_list(self, page_tree):
+        xpath = '//div[@class="entry-image"]/a/@href'
+        res = page_tree.xpath(xpath)
+        return res
+
+    def _get_page_list(self):
+        xpath = '//div[@class="pagination"]/a/@href'
+        return self.page_tree.xpath(xpath)
+
+    def _get_title(self, post_tree):
+        xpath = '//h1[@class="entry-title"]/text()'
+        res = post_tree.xpath(xpath)[0]
+        return res
+
+    def _get_tags_list(self, post_tree):
+        xpath = '//footer[@class="entry-meta clearfix"]/ul/li/a/text()'
+        res = post_tree.xpath(xpath)
+        return res
+
+    def _get_author(self, post_tree):
+        xpath = '//div[@class="post-meta "]/ul/li/a/text()'
+        res = post_tree.xpath(xpath)[0]
+        return res
+
+    def _get_body_content(self, post_tree):
+        xpath = '//div[@class="entry-content"]'
         element = post_tree.xpath(xpath)
         content = et.tostring(element[0], encoding='unicode')
         return content

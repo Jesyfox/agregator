@@ -25,7 +25,7 @@ class Post(models.Model):
     body_content = models.TextField()
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.site_url} {self.title}'
 
 
 tag_register(Post)
