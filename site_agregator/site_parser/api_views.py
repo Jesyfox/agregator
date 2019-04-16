@@ -1,15 +1,25 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics, renderers
+from rest_framework.response import Response
 from tagging.models import Tag, TaggedItem
 
 from .models import SiteUrl, Author, Post
 from .serializers import SiteUrlSerializer, AuthorSerializer, TagSerializer, PostSerializer
 
 
-class PostViewSet(viewsets.ModelViewSet):
+class PostBody(generics.GenericAPIView):
+    queryset = Post.objects.all()
+    renderer_classes = (renderers.StaticHTMLRenderer,)
+
+    def get(self, request, *args, **kwargs):
+        post = self.get_object()
+        return Response(post.body_content)
+
+
+class PostViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 
-class TagViewSet(viewsets.ModelViewSet):
+class TagViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
