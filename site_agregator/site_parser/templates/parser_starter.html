@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parser Starter</title>
+</head>
+<body>
+<a href="/">to post list</a>
+<div>
+    {{ models_count }} posts of {{ site }} in db
+</div>
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" name="parse" value="Parse" />
+</form>
+</body>
+</html>

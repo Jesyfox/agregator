@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'site_parser',
+    'post_previewer',
+
+    'django_celery_results',
+    'tagging',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +89,8 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+CELERY_RESULT_BACKEND = 'django-db'
 
 
 # Password validation
