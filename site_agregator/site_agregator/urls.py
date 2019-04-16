@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('parse/', include(('site_parser.urls', 'site_parser'), namespace='site_parser')),
+    path('', include(('site_parser.urls', 'site_parser'), namespace='site_parser')),
     path('', include(('post_previewer.urls', 'post_previewer'), namespace='post_previewer')),
     path('admin/', admin.site.urls),
 ]
