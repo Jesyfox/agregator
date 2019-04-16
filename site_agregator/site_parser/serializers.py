@@ -46,7 +46,7 @@ class TaggedItemSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = TaggedItem
-        fields = ('id', 'object')
+        fields = ('object',)
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):

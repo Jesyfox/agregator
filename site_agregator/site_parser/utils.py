@@ -22,5 +22,5 @@ def add_post_to_db(data):
     except IntegrityError:
         pass
     else:
-        new_post.tags = ','.join(data['tags'])
+        new_post.tags = ','.join(data['tags']).lower()
         print(f'new_post: {data["title"]}')
