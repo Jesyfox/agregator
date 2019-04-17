@@ -1,9 +1,9 @@
 from rest_framework import viewsets, generics, renderers
 from rest_framework.response import Response
-from tagging.models import Tag, TaggedItem
+from tagging.models import Tag
 
-from .models import SiteUrl, Author, Post
-from .serializers import SiteUrlPostSerializer, TagSerializer, PostSerializer
+from .models import Post
+from .serializers import TagSerializer, PostSerializer
 
 
 class PostBody(generics.GenericAPIView):

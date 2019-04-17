@@ -26,11 +26,13 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     site_url = SiteUrlPostSerializer()
     author = AuthorPostSerializer()
     tags = TagPostSerializer(many=True)
-    body = serializers.HyperlinkedIdentityField(view_name='site_parser:posts-body', format='html')
+    body = serializers.HyperlinkedIdentityField(
+        view_name='site_parser:posts-body', format='html')
 
     class Meta:
         model = Post
-        fields = ('id', 'site_url', 'title', 'post_url', 'tags', 'body', 'author')
+        fields = ('id', 'site_url', 'title', 'post_url',
+                  'tags', 'body', 'author')
 
 
 class TaggedPostSerializer(serializers.HyperlinkedModelSerializer):
