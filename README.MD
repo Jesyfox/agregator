@@ -1,4 +1,4 @@
-#site agregator
+###site agregator
 
 ### docs:
 
@@ -14,7 +14,7 @@ postgresql
 
 ### Instalation:
 
-##### virtualenv:
+### virtualenv:
 
 `python3 -m venv venv`
 
@@ -22,7 +22,7 @@ postgresql
 
 `pip install -r requirements.txt`
 
-#####database:
+###database:
 
 `sudo su - postgres`
 
@@ -36,10 +36,12 @@ postgresql
 
 run migrations: ./manage.py migrate
 
-####open 2 teminals: at first terminal:
+###run:
+
+open 2 teminals: at first terminal:
  
  `celery -A site_parser worker --loglevel=info` 
  
-####at second terminal: 
+at second terminal: 
 
 `./manage.py runserver`
