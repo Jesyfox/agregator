@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
     'django_celery_results',
     'tagging',
+    'rest_framework',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +74,11 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5
+}
 
 WSGI_APPLICATION = 'site_agregator.wsgi.application'
 

@@ -1,6 +1,4 @@
-from django.urls import path, re_path
-
-from site_parser.models import Post
+from django.urls import path
 
 from . import views
 

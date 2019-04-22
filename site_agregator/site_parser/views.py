@@ -12,8 +12,10 @@ class ParserView(View):
 
     def __init__(self):
         super().__init__()
-        self.context = {'models_count': Post.objects.filter(site_url__url=self.site).count(),
-                        'site': self.site}
+        self.context = {
+            'models_count': Post.objects.filter(site_url__url=self.site).count(),
+            'site': self.site
+        }
 
     def get(self, request):
         return render(request, self.template_name, context=self.context)

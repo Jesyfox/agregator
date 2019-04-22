@@ -1,20 +1,20 @@
-site agregator
+###site agregator
 
-docs:
+### docs:
 
 tags - https://django-tagging.readthedocs.io/en/develop/#tagging-views-taggedobjectlist
 
 writen with Python 3.6.7
 
-you will need:
+### you will need:
 
 redis
 
 postgresql
 
-Instalation:
+### Instalation:
 
-virtualenv:
+### virtualenv:
 
 `python3 -m venv venv`
 
@@ -22,7 +22,7 @@ virtualenv:
 
 `pip install -r requirements.txt`
 
-database:
+###database:
 
 `sudo su - postgres`
 
@@ -34,9 +34,9 @@ database:
 
 `GRANT ALL PRIVILEGES ON DATABASE agregator TO scraper;`
 
-You must be here: *your folder*/olx_rem/olx_rem
-
 run migrations: ./manage.py migrate
+
+###run:
 
 open 2 teminals: at first terminal:
  
