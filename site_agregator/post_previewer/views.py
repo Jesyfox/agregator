@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic import View
 from django.core.exceptions import ImproperlyConfigured
+from django.db.models.query import QuerySet
 
 from tagging.views import TaggedObjectList
 from tagging.models import Tag
@@ -15,8 +16,31 @@ class Index(View):
 
 
 class TagList(ListView):
-    queryset = Tag.objects.usage_for_model(Post, counts=True, min_count=2)
+    model = Tag
     template_name = 'tag_list.html'
+
+    def get_queryset(self):
+        if self.queryset is not None:
+            queryset = self.queryset
+            if isinstance(queryset, QuerySet):
+                queryset = queryset.all()
+        elif self.model is not None:
+            queryset = self.model.objects.usage_for_model(Post, counts=True, min_count=2)
+        else:
+            raise ImproperlyConfigured(
+                "%(cls)s is missing a QuerySet. Define "
+                "%(cls)s.model, %(cls)s.queryset, or override "
+                "%(cls)s.get_queryset()." % {
+                    'cls': self.__class__.__name__
+                }
+            )
+        ordering = self.get_ordering()
+        if ordering:
+            if isinstance(ordering, str):
+                ordering = (ordering,)
+            queryset = queryset.order_by(*ordering)
+
+        return queryset
 
 
 class PostTagDetail(TaggedObjectList):
