@@ -25,6 +25,8 @@ SECRET_KEY = 'h#2_i5wrt-%_wx2&nyn-_$_33+m++hant&-c!)@_e8#10@dc$t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+LOG_LEVEL = 'DEBUG'
+
 ALLOWED_HOSTS = []
 
 
@@ -117,6 +119,36 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname} {asctime} {module} {process:d} {thread:d}] {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '[{levelname} {asctime}] {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'parser': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', LOG_LEVEL),
+            'formatter': 'verbose',
+            'propagate': False
+        },
+    },
+}
 
 
 # Internationalization

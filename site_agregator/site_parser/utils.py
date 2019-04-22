@@ -1,6 +1,10 @@
 from django.db.utils import IntegrityError
 from .models import Post, SiteUrl, Author
 
+import logging
+
+logger = logging.getLogger('parser')
+
 
 def get_author_object(author):
     return Author.objects.get_or_create(name=author)[0]
@@ -23,4 +27,4 @@ def add_post_to_db(data):
         pass
     else:
         new_post.tags = ','.join(data['tags']).lower()
-        print(f'new_post: {data["title"]}')
+        logger.info(f'new_post: {data["title"]}')

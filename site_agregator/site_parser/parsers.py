@@ -1,5 +1,4 @@
 import logging
-import sys
 import requests
 import lxml.etree as et
 import time
@@ -22,14 +21,7 @@ class Parser:
         if not self.site_url:
             raise NotImplementedError('You must overwrite site_url var')
 
-        self.logger = logging.getLogger(self.site_url)
-
-        self.logger.setLevel(logging.INFO)
-
-        stdout_format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-        channel = logging.StreamHandler(sys.stdout)
-        channel.setFormatter(stdout_format)
-        self.logger.addHandler(channel)
+        self.logger = logging.getLogger('parser')
 
         try:
             page = requests.get(self.site_url, timeout=20)
