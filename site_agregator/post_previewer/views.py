@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic import View
 from django.core.exceptions import ImproperlyConfigured
+from django.db.models.query import QuerySet
 
 from tagging.views import TaggedObjectList
 from tagging.models import Tag
