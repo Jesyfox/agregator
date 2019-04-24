@@ -72,10 +72,14 @@ class Parser:
         data = {'site_url': self.site_url}
         self.logger.debug('parsing data from post...')
         for field_key in self.field_mappings.keys():
-            self.logger.debug(f'getting field key {field_key}')
-            field = getattr(self, self.field_mappings[field_key])
-            data.update({field_key: field(post_tree)})
-            self.logger.debug('field key added')
+            try:
+                self.logger.debug(f'getting field key {field_key}')
+                field = getattr(self, self.field_mappings[field_key])
+                data.update({field_key: field(post_tree)})
+                self.logger.debug('field key added')
+            except Exception as e:
+                self.logger.error(e)
+                continue
         data.update({'post_url': post_tree.base})
         self.logger.debug('page_parsing done!')
         return data
