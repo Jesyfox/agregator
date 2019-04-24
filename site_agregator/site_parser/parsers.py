@@ -1,6 +1,6 @@
 import logging
 import requests
-import lxml.etree as et
+import lxml.html as html
 import time
 
 from . import utils
@@ -17,6 +17,10 @@ class Parser:
 
     site_url = ''
 
+    @staticmethod
+    def get_tree_element(response, base_url=None):
+        return html.fromstring(response.content.decode('UTF-8'), base_url=base_url)
+
     def __init__(self):
         if not self.site_url:
             raise NotImplementedError('You must overwrite site_url var')
@@ -24,11 +28,11 @@ class Parser:
         self.logger = logging.getLogger('parser')
 
         try:
-            page = requests.get(self.site_url, timeout=20)
+            response = requests.get(self.site_url, timeout=20)
         except requests.exceptions.Timeout:
             self.logger.error(f'main url {self.site_url}, timed out!')
         else:
-            self.page_tree = et.HTML(page.content)
+            self.page_tree = self.get_tree_element(response)
 
     def _get_post_list(self, page_tree):
         raise NotImplementedError
@@ -55,12 +59,12 @@ class Parser:
         for url in url_list:
             self.logger.debug(f'get url {url}')
             try:
-                r_url = requests.get(url, timeout=20)
+                response = requests.get(url, timeout=20)
                 time.sleep(3)
             except requests.exceptions.Timeout:
                 self.logger.error(f'url {url}, timed out!')
             else:
-                tree = et.HTML(r_url.content, base_url=url)
+                tree = self.get_tree_element(response, base_url=url)
                 self.logger.debug('yielding tree')
                 yield tree
 
@@ -128,7 +132,7 @@ class Habr(Parser):
     def _get_body_content(self, post_tree):
         xpath = '//div[@class="post__body post__body_full"]'
         element = post_tree.xpath(xpath)
-        content = et.tostring(element[0], encoding='unicode')
+        content = html.tostring(element[0], encoding='unicode')
         return content
 
 
@@ -163,5 +167,5 @@ class TProgerPython(Parser):
     def _get_body_content(self, post_tree):
         xpath = '//div[@class="entry-content"]'
         element = post_tree.xpath(xpath)
-        content = et.tostring(element[0], encoding='unicode')
+        content = html.tostring(element[0], encoding='unicode')
         return content
