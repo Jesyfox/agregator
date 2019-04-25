@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'site_parser',
     'post_previewer',
+    'rest_api',
 
     'django_celery_results',
     'tagging',

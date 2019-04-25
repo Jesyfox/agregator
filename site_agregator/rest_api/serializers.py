@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from tagging.models import Tag, TaggedItem
 
-from .models import SiteUrl, Author, Post
+from site_parser.models import SiteUrl, Author, Post
 
 
 class SiteUrlPostSerializer(serializers.HyperlinkedModelSerializer):
@@ -27,7 +27,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     author = AuthorPostSerializer()
     tags = TagPostSerializer(many=True)
     body = serializers.HyperlinkedIdentityField(
-        view_name='site_parser:posts-body', format='html')
+        view_name='rest_api:posts-body', format='html')
 
     class Meta:
         model = Post
