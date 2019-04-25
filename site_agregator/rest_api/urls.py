@@ -14,6 +14,7 @@ schema_view = get_swagger_view(title='Site agregator')
 
 urlpatterns = [
     path('api/', include((router.urls, 'site_parser'))),
-    path('api/swagger', schema_view),
+    path('api/swagger/', schema_view),
     path('api/posts/<int:pk>/body/', api_views.PostBody.as_view(), name='posts-body'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

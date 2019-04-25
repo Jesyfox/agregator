@@ -83,6 +83,15 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 5
 }
 
+SWAGGER_SETTINGS = {
+    'LOGIN_URL': 'rest_api:rest_framework:login',
+    'LOGOUT_URL': 'rest_api:rest_framework:logout',
+    'USE_SESSION_AUTH': True,
+    'DOC_EXPANSION': 'list',
+    'APIS_SORTER': 'alpha',
+    'SECURITY_DEFINITIONS': None,
+}
+
 WSGI_APPLICATION = 'site_agregator.wsgi.application'
 
 
