@@ -45,3 +45,9 @@ open 2 teminals: at first terminal:
 at second terminal: 
 
 `./manage.py runserver`
+
+### supervisord
+
+ps -ef | grep supervisord
+
+kill -s SIGTERM <num>
