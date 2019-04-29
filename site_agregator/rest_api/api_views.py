@@ -6,7 +6,6 @@ from tagging.models import Tag
 from site_parser.models import Post
 from .serializers import TagSerializer, PostSerializer
 
-import rest_framework_swagger
 
 class PostBody(generics.GenericAPIView):
     """
