@@ -9,24 +9,19 @@ RUN apt-get install -y \
     postgresql-server-dev-all \
     build-essential
 
+ADD . /app
+
 WORKDIR /app
-
-COPY . /app
-
-RUN echo "" > /app/supervisord-agregator.log
-
-RUN echo "" > /app/supervisord-celery.log
-
-RUN echo "" > /app/supervisord.log
 
 RUN pip3 install --upgrade pip setuptools wheel
 
 RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
 
-
 RUN useradd \
     -g users \
     myuser
+
+RUN chown myuser logs
 
 USER myuser
 
