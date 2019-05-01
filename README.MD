@@ -1,4 +1,4 @@
-###site agregator
+### site agregator
 
 ### docs:
 
@@ -24,7 +24,7 @@ postgresql
 
 `pip install -r requirements.txt`
 
-###database:
+### database:
 
 `sudo su - postgres`
 
@@ -38,7 +38,7 @@ postgresql
 
 run migrations: ./manage.py migrate
 
-###run:
+### run:
 
 open 2 teminals: at first terminal:
  
@@ -51,3 +51,7 @@ at second terminal:
 ### docker run:
 
 `docker-compose up`
+
+`docker-compose exec agregator bash`
+ 
+ `python3 site_agregator/manage.py migrate`

@@ -18,6 +18,7 @@ services:
     working_dir: /app
     ports:
       - "8000:8000"
+      - "9001:9001"
     volumes:
       - .:/app
 
@@ -25,20 +26,9 @@ services:
       - POSTGRES_HOST=postgresql
       - POSTGRES_PORT=5432
 
-    depends_on:
-      - migration
-
     links:
       - postgresql
       - redis
-
-  migration:
-    build: .
-    command: python3 site_agregator/manage.py migrate
-    volumes:
-      - .:/app
-    depends_on:
-      - postgresql
 
 volumes:
   postgres_data:

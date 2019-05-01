@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'tagging',
     'rest_framework',
     'rest_framework_swagger',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -104,7 +105,7 @@ DATABASES = {
         'NAME': 'agregator',
         'USER': 'scraper',
         'PASSWORD': 'scraper123',
-        'HOST': os.getenv('POSTGRES_HOST', 'postgresql'),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
         'PORT': os.getenv('POSTGRES_PORT', 5432)
     }
 }

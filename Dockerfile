@@ -17,6 +17,8 @@ RUN echo "" > /app/supervisord-agregator.log
 
 RUN echo "" > /app/supervisord-celery.log
 
+RUN echo "" > /app/supervisord.log
+
 RUN pip3 install --upgrade pip setuptools wheel
 
 RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
