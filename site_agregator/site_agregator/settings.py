@@ -27,7 +27,7 @@ DEBUG = True
 
 LOG_LEVEL = 'DEBUG'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -104,8 +104,8 @@ DATABASES = {
         'NAME': 'agregator',
         'USER': 'scraper',
         'PASSWORD': 'scraper123',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': os.getenv('POSTGRES_HOST', 'postgresql'),
+        'PORT': os.getenv('POSTGRES_PORT', 5432)
     }
 }
 

@@ -1,0 +1,44 @@
+version: '3'
+services:
+  postgresql:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=agregator
+      - POSTGRES_USER=scraper
+      - POSTGRES_PASSWORD=scraper123
+
+  redis:
+    image: "redis:alpine"
+
+  agregator:
+    build: .
+    command: supervisord -n
+    working_dir: /app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+
+    environment:
+      - POSTGRES_HOST=postgresql
+      - POSTGRES_PORT=5432
+
+    depends_on:
+      - migration
+
+    links:
+      - postgresql
+      - redis
+
+  migration:
+    build: .
+    command: python3 site_agregator/manage.py migrate
+    volumes:
+      - .:/app
+    depends_on:
+      - postgresql
+
+volumes:
+  postgres_data:

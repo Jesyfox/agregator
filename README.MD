@@ -8,6 +8,8 @@ writen with Python 3.6.7
 
 ### you will need:
 
+docker
+
 redis
 
 postgresql
@@ -46,8 +48,6 @@ at second terminal:
 
 `./manage.py runserver`
 
-### supervisord
+### docker run:
 
-ps -ef | grep supervisord
-
-kill -s SIGTERM <num>
+`docker-compose up`

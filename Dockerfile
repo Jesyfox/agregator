@@ -5,28 +5,27 @@ RUN apt-get update
 RUN apt-get install -y \
     ca-certificates \
     python3-all-dev \
-    python3-venv \
+    python3-pip \
     postgresql-server-dev-all \
     build-essential
-
-RUN python3 -m venv /venv
-
-ENV PATH="/venv/bin:$PATH"
 
 WORKDIR /app
 
 COPY . /app
 
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN echo "" > /app/supervisord-agregator.log
 
-EXPOSE 8000
+RUN echo "" > /app/supervisord-celery.log
+
+RUN pip3 install --upgrade pip setuptools wheel
+
+RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
+
 
 RUN useradd \
     -g users \
     myuser
 
 USER myuser
-
-CMD ["/venv/bin/supervisord"]
 
 ENV PYTHONUNBUFFERED 1
