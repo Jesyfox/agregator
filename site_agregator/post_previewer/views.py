@@ -11,8 +11,10 @@ from site_parser.models import Post
 
 
 class Index(View):
+    template_name = 'index.html'
+
     def get(self, request):
-        return redirect('posts/')
+        return render(request, self.template_name)
 
 
 class TagList(ListView):

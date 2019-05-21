@@ -106,7 +106,7 @@ DATABASES = {
         'USER': 'scraper',
         'PASSWORD': 'scraper123',
         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
-        'PORT': os.getenv('POSTGRES_PORT', 5432)
+        'PORT': os.getenv('POSTGRES_PORT', 5433)
     }
 }
 
@@ -176,5 +176,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
 
 STATIC_URL = '/static/'

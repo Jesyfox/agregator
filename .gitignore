@@ -1,3 +1,4 @@
+node_modules/
 db.sqlite3
 .idea/
 site_agregator/site_agregator/__pycache__/
