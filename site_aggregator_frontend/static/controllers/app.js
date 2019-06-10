@@ -10,14 +10,14 @@ app.config(function($interpolateProvider) {
 app.controller('PhoneListController', function PhoneListController($scope) {
   $scope.phones = [
     {
-      name: 'Nexus S',
-      snippet: 'Fast just got faster with Nexus S.'
+      name: 'Test 1',
+      snippet: 'This is the snippet of Test 1'
     }, {
-      name: 'Motorola XOOM™ with Wi-Fi',
-      snippet: 'The Next, Next Generation tablet.'
+      name: 'Test 2',
+      snippet: 'This is the snippet of Test 2'
     }, {
-      name: 'MOTOROLA XOOM™',
-      snippet: 'The Next, Next Generation tablet.'
+      name: 'Test 3',
+      snippet: 'This is the snippet of Test 3'
     }
   ];
  });

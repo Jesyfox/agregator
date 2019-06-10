@@ -1,13 +1,10 @@
-{% load static %}
+
+<script src="/static/lib/angular/angular.js"></script>
+<script src="/static/controllers/app.js"></script>
 <html ng-app="app">
 <head>
-  ...
-  <script src="{% static 'lib/angular/angular.js' %}"></script>
-  <script src="{% static 'controllers/app.js' %}"></script>
-
-
+  foo
 </head>
-{% verbatim %}
 <body ng-controller="PhoneListController">
 
   <ul>
@@ -18,5 +15,5 @@
   </ul>
 
 </body>
-{% endverbatim %}
+
 </html>

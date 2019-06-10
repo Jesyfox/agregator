@@ -1,10 +1,11 @@
 ### site agregator
 
+writen with Python 3.6.7
+
 ### docs:
 
 tags - https://django-tagging.readthedocs.io/en/develop/#tagging-views-taggedobjectlist
 
-writen with Python 3.6.7
 
 ### you will need:
 
@@ -47,6 +48,10 @@ open 2 teminals: at first terminal:
 at second terminal: 
 
 `./manage.py runserver`
+
+angularjs server
+
+`npm start`
 
 ### docker run:
 
