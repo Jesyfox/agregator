@@ -5,12 +5,11 @@
 <head>
   foo
 </head>
-<body ng-controller="PhoneListController">
+<body ng-controller="MainController">
 
   <ul>
-    <li ng-repeat="phone in phones">
-      <span>{$ phone.name $}</span>
-      <p>{$ phone.snippet $}</p>
+    <li ng-repeat="tag in tags">
+      <span>{$ tag.name $}</span>
     </li>
   </ul>
 

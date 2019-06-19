@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'site_parser',
     'post_previewer',
     'rest_api',
+    'corsheaders',
 
     'django_celery_results',
     'tagging',
@@ -59,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'site_agregator.urls'
@@ -92,6 +95,15 @@ SWAGGER_SETTINGS = {
     'APIS_SORTER': 'alpha',
     'SECURITY_DEFINITIONS': None,
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'https://localhost:3030',
+)
+CORS_ORIGIN_REGEX_WHITELIST = (
+    'https://localhost:3030',
+)
 
 WSGI_APPLICATION = 'site_agregator.wsgi.application'
 
