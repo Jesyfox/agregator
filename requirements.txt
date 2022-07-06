@@ -29,7 +29,7 @@ itypes==1.1.0
 Jinja2==2.10.1
 jsonschema==2.6.0
 kombu==4.5.0
-lxml==4.3.3
+lxml==4.9.1
 MarkupSafe==1.1.1
 mccabe==0.6.1
 meld3==1.0.2
